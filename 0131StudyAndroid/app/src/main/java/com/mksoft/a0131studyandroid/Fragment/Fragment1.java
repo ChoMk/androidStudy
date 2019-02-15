@@ -29,6 +29,9 @@ public class Fragment1 extends Fragment {
     Button postButton;
     Button changeButton1;
 
+    @Inject
+    WebService webService;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

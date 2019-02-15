@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addPageRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+
+    <RelativeLayout
+        android:id="@+id/addPageTopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
+
+        <Button
+            android:id="@+id/addPageBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="back" />
+
+        <Button
+            android:id="@+id/addPageSubButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="sub" />
+    </RelativeLayout>
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/addPageUserNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addPageTopLayout"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="name" />
+
+    <EditText
+
+        android:layout_marginTop="10dp"
+        android:id="@+id/addPageUserMajorEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addPageUserNameEditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="major" />
+
+    <EditText
+
+        android:layout_marginTop="10dp"
+        android:id="@+id/addPageUserAgeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addPageUserMajorEditText"
+        android:ems="10"
+        android:inputType = "number"
+        android:hint="age"/>
+</RelativeLayout>
