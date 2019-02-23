@@ -12,20 +12,26 @@ import javax.inject.Inject;
 import javax.inject.Scope;
 import javax.inject.Singleton;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-@Singleton
+
 public class WebService {
     private GitHubService gitHubService;
-    @Inject
-    public WebService(GitHubService gitHubService){
 
-        this.gitHubService = gitHubService;
+    public WebService(){
+        Log.d("test", "make it!!!");
+        this.gitHubService = new Retrofit.Builder()
+                .baseUrl("https://api.github.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(GitHubService.class);
     }
-    public void postDatas(User user, final Context context)
+    /*public void postDatas(User user, final Context context)
     {
         Call<User> call = gitHubService.postRepos("meansoup", user);
 
@@ -44,19 +50,18 @@ public class WebService {
                 Log.e("Not Response", t.getLocalizedMessage());
             }
         });
-    }
+    }*/
 
-    public void getDatas(final TextView mRepoText)
+    public LiveData<User> getDatas()
     {
 
         Call<User> call = gitHubService.getRepos("meansoup");
-
+        final MutableLiveData<User> data = new MutableLiveData<>();
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String str = "response code: " + response.code() + "\n ID: " + response.body() + "\n URL: " +  response.body().html_url;
-                    mRepoText.setText(str);
+                    data.postValue(response.body());
                 }
             }
 
@@ -64,7 +69,10 @@ public class WebService {
             public void onFailure(Call<User> call, Throwable t){
                 Log.e("Not Response", t.getLocalizedMessage());
             }
+
+
         });
+        return data;
     }
 
 }

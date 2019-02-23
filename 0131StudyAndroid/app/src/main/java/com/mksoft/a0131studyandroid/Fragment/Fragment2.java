@@ -2,6 +2,7 @@ package com.mksoft.a0131studyandroid.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.mksoft.a0131studyandroid.Data.User;
+import com.mksoft.a0131studyandroid.viewmodel.GitHubViewModel;
 import com.mksoft.a0131studyandroid.MainActivity;
 import com.mksoft.a0131studyandroid.R;
-import com.mksoft.a0131studyandroid.Repository.WebService;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class Fragment2 extends Fragment {
     MainActivity mainActivity;
@@ -26,8 +26,8 @@ public class Fragment2 extends Fragment {
     Button postButton2;
     Button changeButton2;
 
-    @Inject
-    WebService webService;
+
+    GitHubViewModel viewModel;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -46,6 +46,19 @@ public class Fragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment2, container, false);
         initUI(rootView);
+        /*if(viewModel == null)
+            viewModel = DaggerGitHubViewModelComponent.create().gitHubViewModel();
+        */
+        //DaggerGitHubViewModelComponent.create().inject(viewModel);
+        viewModel = ViewModelProviders.of(this).get(GitHubViewModel.class);
+
+        viewModel.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                Log.d("result test", user.login);
+            }
+        });
+
         return rootView;
     }
     private void initUI(ViewGroup rootView){
@@ -56,14 +69,14 @@ public class Fragment2 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mainActivity.getGitHubServiceComponent().makeWebService().getDatas(repoText2);
+
             }
         });
         postButton2 = rootView.findViewById(R.id.postButton2);
         postButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.getGitHubServiceComponent().makeWebService().postDatas(new User("guy", "https://www.github.com/meansoup"), getContext());
+
             }
         });
 

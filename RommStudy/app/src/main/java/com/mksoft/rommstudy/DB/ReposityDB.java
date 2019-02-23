@@ -35,6 +35,7 @@ public class ReposityDB {
         return users;
     }
     public void insertUser(User user){
+
         new insertAsyncTask(userDao).execute(user);
     }
     private static class insertAsyncTask extends AsyncTask<User, Void, Void>{

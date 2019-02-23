@@ -18,6 +18,8 @@ public abstract class AppDB extends RoomDatabase {
     public abstract UserDao userDao();
     private static volatile AppDB INSTANCE;//volatile 메모리에 접근 가능
 
+
+
     static AppDB getDatabase(final Context context){
         if(INSTANCE == null){
 

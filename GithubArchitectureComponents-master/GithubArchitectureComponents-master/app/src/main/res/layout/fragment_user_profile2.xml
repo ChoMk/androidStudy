@@ -1,0 +1,61 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#74b9ff"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.boisneyphilippe.githubarchitecturecomponents.fragments.UserProfileFragment">
+    <Button
+        android:id="@+id/changePage2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2page -> 1page" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/fragment_user_profile_image2"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:background="@drawable/ic_face_white_24dp"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/fragment_user_profile_username2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_margin="5dip"/>
+
+        <TextView
+            android:id="@+id/fragment_user_profile_company2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_margin="5dip"/>
+
+        <TextView
+            android:id="@+id/fragment_user_profile_website2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_margin="5dip"/>
+
+    </LinearLayout>
+
+</LinearLayout>
