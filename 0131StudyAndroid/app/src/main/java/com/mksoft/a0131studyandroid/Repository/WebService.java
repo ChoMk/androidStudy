@@ -20,16 +20,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
+@Singleton
 public class WebService {
-    private GitHubService gitHubService;
 
-    public WebService(){
+    GitHubService gitHubService;
+    @Inject
+    public WebService(GitHubService gitHubService){
         Log.d("test", "make it!!!");
-        this.gitHubService = new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(GitHubService.class);
+        this.gitHubService = gitHubService;
+
     }
     /*public void postDatas(User user, final Context context)
     {
@@ -52,8 +51,10 @@ public class WebService {
         });
     }*/
 
-    public LiveData<User> getDatas()
+    public LiveData<User> getDatas(String ID)
     {
+
+        //Call<User> call = gitHubService.getRepos(ID);
 
         Call<User> call = gitHubService.getRepos("meansoup");
         final MutableLiveData<User> data = new MutableLiveData<>();
@@ -61,7 +62,7 @@ public class WebService {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    data.postValue(response.body());
+                    data.setValue(response.body());
                 }
             }
 

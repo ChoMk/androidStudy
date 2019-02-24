@@ -1,6 +1,5 @@
 package com.mksoft.a0131studyandroid.DI;
 
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,14 +9,10 @@ import java.lang.annotation.Target;
 import androidx.lifecycle.ViewModel;
 import dagger.MapKey;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Documented
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @MapKey
 public @interface ViewModelKey {
     Class<? extends ViewModel> value();
-}
+}//물음표에 GitHubViewModel이 들어가고 이에 맞는 value 즉 키값을 리턴한다?

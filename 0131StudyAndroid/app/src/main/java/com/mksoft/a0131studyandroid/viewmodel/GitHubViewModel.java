@@ -14,9 +14,8 @@ public class GitHubViewModel extends ViewModel {
     private WebService webService;
 
     @Inject
-    public GitHubViewModel(){
-
-        //this.webService = webService;
+    public GitHubViewModel(WebService webService){
+        this.webService = webService;
         init();
     }
 
@@ -24,7 +23,7 @@ public class GitHubViewModel extends ViewModel {
         if(this.user != null){
             return;
         }
-        user = webService.getDatas();
+        user = webService.getDatas("test");
 
     }
     public LiveData<User> getUser(){

@@ -33,32 +33,32 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'io.apisense:rhino-android:1.0'
-    // optional - Test helpers for LiveData
-    def lifecycle_version = "2.0.0"
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    // alternatively - just ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version" // use -ktx for Kotlin
-    // alternatively - just LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
-    // alternatively - Lifecycles only (no ViewModel or LiveData). Some UI
-    //     AndroidX libraries use this lightweight import for Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    // alternatively, just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    // alternatively, just LiveData
+    implementation "android.arch.lifecycle:livedata:1.1.1"
 
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version" // use kapt for Kotlin
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
-    // optional - ReactiveStreams support for LiveData
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version" // use -ktx for Kotlin
+    // Room (use 1.1.0-alpha2 for latest alpha)
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
-    // optional - Test helpers for LiveData
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.2'
 
+    // RETROFIT
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
-    //dagger2
-    implementation 'com.google.dagger:dagger:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+    // DAGGER 2
+    implementation 'com.google.dagger:dagger-android:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+
 
 }

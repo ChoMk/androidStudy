@@ -14,10 +14,14 @@ import com.mksoft.a0131studyandroid.viewmodel.GitHubViewModel;
 import com.mksoft.a0131studyandroid.MainActivity;
 import com.mksoft.a0131studyandroid.R;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import dagger.android.support.AndroidSupportInjection;
 
 public class Fragment2 extends Fragment {
     MainActivity mainActivity;
@@ -25,12 +29,17 @@ public class Fragment2 extends Fragment {
     Button getButton2;
     Button postButton2;
     Button changeButton2;
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+    private GitHubViewModel gitHubViewModel;
 
 
-    GitHubViewModel viewModel;
+    public Fragment2(){}
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.configureDagger();
+        this.configureViewModel();
 
     }
 
@@ -46,21 +55,25 @@ public class Fragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment2, container, false);
         initUI(rootView);
-        /*if(viewModel == null)
-            viewModel = DaggerGitHubViewModelComponent.create().gitHubViewModel();
-        */
-        //DaggerGitHubViewModelComponent.create().inject(viewModel);
-        viewModel = ViewModelProviders.of(this).get(GitHubViewModel.class);
-
-        viewModel.getUser().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable User user) {
-                Log.d("result test", user.login);
-            }
-        });
 
         return rootView;
     }
+
+    private void configureDagger(){
+        AndroidSupportInjection.inject(this);
+    }
+    private void configureViewModel(){
+        gitHubViewModel = ViewModelProviders.of(this, viewModelFactory).get(GitHubViewModel.class);
+
+        gitHubViewModel.getUser().observe(this, new Observer<User>() {
+
+            @Override
+            public void onChanged(User user) {
+                Log.d("testResultF1", user.login);
+            }
+        });
+    }
+
     private void initUI(ViewGroup rootView){
         repoText2 = rootView.findViewById(R.id.repoText2);
 

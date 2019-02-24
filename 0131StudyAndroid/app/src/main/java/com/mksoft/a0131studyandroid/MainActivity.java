@@ -6,18 +6,28 @@ import android.widget.FrameLayout;
 import com.mksoft.a0131studyandroid.Fragment.Fragment1;
 import com.mksoft.a0131studyandroid.Fragment.Fragment2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
     Fragment1 fragment1;
     Fragment2 fragment2;
     FrameLayout mainContainer;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.configureDagger();
         init();
     }
 
@@ -40,4 +50,13 @@ public class MainActivity extends AppCompatActivity {
             //add 페이지
         }
     }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
+    private void configureDagger(){
+        AndroidInjection.inject(this);
+    }
+
 }

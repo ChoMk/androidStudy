@@ -1,29 +1,22 @@
-package com.boisneyphilippe.githubarchitecturecomponents;
+package com.mksoft.a0131studyandroid;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import com.boisneyphilippe.githubarchitecturecomponents.di.component.DaggerAppComponent;
+import com.mksoft.a0131studyandroid.DI.DaggerAppComponent;
 
 import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
-
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 public class App extends Application implements HasActivityInjector {
 
+    public static Context context;
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
-
-
-    public static Context context;
-
+//엡 아래 컴포넌트 친구...액티비티
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,7 +29,6 @@ public class App extends Application implements HasActivityInjector {
         return dispatchingAndroidInjector;
     }
 
-    // ---
 
     private void initDagger(){
         DaggerAppComponent.builder().application(this).build().inject(this);

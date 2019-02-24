@@ -1,12 +1,9 @@
 package com.mksoft.a0131studyandroid.DI;
 
-import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mksoft.a0131studyandroid.Repository.GitHubService;
 import com.mksoft.a0131studyandroid.Repository.WebService;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -15,20 +12,30 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Module(includes = ViewModelModule.class)
 public class AppModule {
 
-
+    private static String BASE_URL = "https://api.github.com/";
+    @Provides
+    Gson provideGson(){
+        return new GsonBuilder().create();
+    }
+    @Provides
+    Retrofit provideRetrofit(Gson gson){
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(BASE_URL)
+                .build();
+        return retrofit;
+    }
     @Provides
     @Singleton
-    WebService provideUserRepository() {
-        return new WebService();
+    GitHubService provideGithubService(Retrofit retrofit){
+        return retrofit.create(GitHubService.class);
     }
-
-
+    @Provides
+    @Singleton
+    WebService provideWebservice(GitHubService gitHubService){
+        return new WebService(gitHubService);
+    }
 
 }
