@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyService extends Service {
-    NotificationManagerCompat  notificationManager;
+    NotificationManager  notificationManager;
     ServiceThread thread;
     Notification notification;
     Notification notification2;
@@ -37,13 +37,22 @@ public class MyService extends Service {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        notificationManager = NotificationManagerCompat.from(this);
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel notificationChannel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_DEFAULT);
+        notificationChannel.setDescription("channel description"); notificationChannel.enableLights(true); notificationChannel.setLightColor(Color.GREEN);
+        notificationChannel.enableVibration(true);
+        notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        notificationManager.createNotificationChannel(notificationChannel);
 
 
-        notification = new NotificationCompat.Builder(getApplicationContext(),"testte")
+
+
+        notification = new NotificationCompat.Builder(getApplicationContext(), "channel_id")
                 .setContentTitle("명기님")
                 .setContentText("보냄")
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)
@@ -51,14 +60,14 @@ public class MyService extends Service {
                 .build();
 
 
-        notification2 = new NotificationCompat.Builder(getApplicationContext(), "testte")
+        notification2 = new NotificationCompat.Builder(getApplicationContext(), "channel_id")
                 .setContentTitle("보성님")
                 .setContentText("보냄")
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setGroup("test")
                 .build();
 
-        summary = new NotificationCompat.Builder(getApplicationContext(), "testte")
+        summary = new NotificationCompat.Builder(getApplicationContext(),"channel_id")
                 .setContentText("no read")
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setGroup("test")
@@ -69,7 +78,6 @@ public class MyService extends Service {
 
 
         myServiceHandler handler = new myServiceHandler();
-
         thread = new ServiceThread(handler);
         thread.start();
 
@@ -85,6 +93,7 @@ public class MyService extends Service {
     }
 
     class myServiceHandler extends Handler {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void handleMessage(android.os.Message msg) {
 
